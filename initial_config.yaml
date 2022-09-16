@@ -1,0 +1,74 @@
+#Full path : str
+#Check the path using command : pwd
+#save_path : "/home/zcakir/Workspace/Github/Greeley/VASP/ML/workflow/3/results/"
+save_path : ???
+
+# Either "create_only" or "submit_only" or "do_all" 
+# Or "graph"
+# str [Default] = "do_all"
+submit : "create_only"
+
+#Lattice constant initial guess : float
+lattice_i: 3.73
+#Lattice constant final guess : float
+lattice_f: 3.82
+#Lattice constant increment : float
+increment : 0.01
+
+#Dictionary of compositions for bulk_atoms
+#Compositions have to add up to 1!!!!
+#Make sure that compositions are matching with bulk_atoms!
+#comp : {"Co": 0.4, "Mo": 0.2, "Fe": 0.4}
+comp : ???
+
+#Dictionary of magmom guess for each atom in bulk_atoms
+#Magnetization can be found on https://materialsproject.org/
+#Make sure that elements are matching with bulk_atoms!
+#magmom : {"Co": 3, "Mo": 0.1, "Fe": 2}
+magmom : ???
+
+#Hydra Configs DO NOT CHANGE!
+hydra:
+    job_logging:
+          formatters:
+              msgOnly:
+                  format: '%(message)s'
+              briefFormatter:
+                  format: '%(levelname)s: %(message)s'
+              preciseFormatter:
+                  format: '%(asctime)s,%(msecs)04d [%(module)s -%(levelname)s] %(message)s'
+                  datefmt: '%Y%m%d %H%M%S'
+          handlers:
+              console:
+                level: INFO
+                formatter: briefFormatter
+              file:
+                formatter: preciseFormatter
+          root:
+              level: DEBUG
+    help:
+        # Help header, customize to describe your app to your users
+        header: == ${hydra.help.app_name} ==
+
+        footer: |-
+            Powered by Zuhal Cakir (https://zuhal.xyz)
+            Use --hydra-help to view Hydra specific help
+
+        template: |-
+            ${hydra.help.header}
+
+            This is ${hydra.help.app_name}!
+            
+            == How to use ==
+            You can override everything, for example:
+            
+            > python3 bulk.py lattice_i=3.73 lattice_f=3.82
+            > python3 bulk.py submit=create_only
+            > python3 bulk.py submit=do_all
+
+            == Your Config ==
+            This is the config generated for this run.
+            --------------------------------------------
+            $CONFIG
+            --------------------------------------------
+            ${hydra.help.footer}
